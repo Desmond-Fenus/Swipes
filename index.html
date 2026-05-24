@@ -1,89 +1,1057 @@
 <!doctype html>
 <html lang="ru">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-  <title>VibeSwipe MVP — Moscow Food Flow</title>
-  <style>
-    :root { --bg:#0b0c10; --panel:#171922; --panel2:#222633; --text:#f4f4f5; --muted:#a1a1aa; --line:rgba(255,255,255,.11); --good:#48d47d; --bad:#ff5c72; --accent:#9b7cff; --accent2:#ffb86b; --shadow:0 20px 80px rgba(0,0,0,.45); --radius:28px; }
-    *{box-sizing:border-box} body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:radial-gradient(circle at top left,rgba(155,124,255,.28),transparent 35%),radial-gradient(circle at bottom right,rgba(255,184,107,.17),transparent 32%),var(--bg);color:var(--text);min-height:100vh;overflow:hidden}.app{width:min(430px,100vw);height:100dvh;margin:0 auto;position:relative;display:flex;flex-direction:column;padding:18px 16px 24px}.topbar{display:flex;align-items:center;justify-content:space-between;min-height:44px;gap:12px}.brand{display:flex;flex-direction:column;line-height:1.05}.brand strong{font-size:18px;letter-spacing:-.02em}.brand span{font-size:12px;color:var(--muted);margin-top:4px}.pill{border:1px solid var(--line);border-radius:999px;padding:9px 12px;color:var(--muted);background:rgba(255,255,255,.04);font-size:12px;white-space:nowrap}.screen{display:none;flex:1;min-height:0;animation:pop .24s ease}.screen.active{display:flex;flex-direction:column}@keyframes pop{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}.hero{margin-top:26px}h1{font-size:38px;line-height:.96;letter-spacing:-.07em;margin:0}.sub{margin-top:14px;color:var(--muted);font-size:15px;line-height:1.45}.grid{margin-top:28px;display:grid;grid-template-columns:1fr 1fr;gap:12px}.tile{border:1px solid var(--line);background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.035));border-radius:24px;padding:18px;min-height:130px;cursor:pointer;user-select:none;box-shadow:0 12px 36px rgba(0,0,0,.18);transition:transform .16s ease,border-color .16s ease}.tile:active{transform:scale(.97)}.tile:hover{border-color:rgba(255,255,255,.24)}.tile .emoji{font-size:34px;display:block;margin-bottom:16px}.tile strong{font-size:17px;display:block;letter-spacing:-.02em}.tile span:last-child{display:block;margin-top:7px;color:var(--muted);font-size:12px;line-height:1.35}.cta{margin-top:auto;border:0;background:var(--text);color:#101014;border-radius:18px;padding:16px 18px;font-weight:850;font-size:15px;cursor:pointer}.flow-head{margin-top:20px;display:flex;align-items:end;justify-content:space-between;gap:12px}.flow-title{font-size:27px;font-weight:950;letter-spacing:-.055em;line-height:1}.flow-sub{color:var(--muted);font-size:13px;margin-top:8px}.quick-row{display:flex;gap:8px;overflow:auto;margin-top:16px;padding-bottom:2px;scrollbar-width:none}.quick-row::-webkit-scrollbar{display:none}.chip{border:1px solid var(--line);background:rgba(255,255,255,.05);color:var(--text);border-radius:999px;padding:10px 13px;font-size:13px;white-space:nowrap;cursor:pointer}.chip.selected{border-color:rgba(155,124,255,.75);background:rgba(155,124,255,.18)}.mode-panel{margin-top:20px;border-radius:26px;border:1px solid var(--line);background:rgba(255,255,255,.06);padding:16px}.mode-panel strong{display:block;font-size:16px;margin-bottom:10px}.mini-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}.mini{border:1px solid var(--line);background:rgba(0,0,0,.16);color:var(--text);border-radius:18px;padding:14px 12px;font-weight:850;cursor:pointer;text-align:left}.mini.selected{outline:2px solid rgba(155,124,255,.8)}.deck-area{flex:1;min-height:0;display:flex;align-items:center;justify-content:center;position:relative;padding:18px 0 12px}.progress{height:7px;border-radius:99px;background:rgba(255,255,255,.08);overflow:hidden;margin-top:18px}.progress div{height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:inherit;transition:width .2s ease}.card{width:100%;height:min(56dvh,460px);background:radial-gradient(circle at top left,rgba(255,255,255,.16),transparent 35%),linear-gradient(160deg,#232634,#14161d 70%);border:1px solid rgba(255,255,255,.12);box-shadow:var(--shadow);border-radius:var(--radius);padding:26px;display:flex;flex-direction:column;justify-content:space-between;position:absolute;touch-action:none;user-select:none;transform-origin:50% 80%;transition:transform .18s ease,opacity .18s ease}.card.back{transform:scale(.94) translateY(18px);opacity:.48;pointer-events:none}.card.gone-right{transform:translateX(120%) rotate(16deg);opacity:0}.card.gone-left{transform:translateX(-120%) rotate(-16deg);opacity:0}.card-stage{color:var(--muted);font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:.08em}.card-emoji{font-size:74px;margin-bottom:18px;display:block}.card-title{font-size:44px;font-weight:950;letter-spacing:-.075em;line-height:.95}.card-desc{color:var(--muted);font-size:15px;line-height:1.4;margin-top:14px;max-width:300px}.tags{display:flex;flex-wrap:wrap;gap:8px}.tag{color:rgba(255,255,255,.72);border:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.05);padding:8px 10px;border-radius:999px;font-size:12px}.actions{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px}.action{border:1px solid var(--line);color:var(--text);border-radius:20px;padding:15px 14px;background:rgba(255,255,255,.05);font-weight:850;cursor:pointer;font-size:14px}.action.no{border-color:rgba(255,91,110,.35)}.action.yes{border-color:rgba(67,209,122,.35)}.hint{text-align:center;color:var(--muted);font-size:12px;margin-top:10px}.result-card{margin-top:22px;background:rgba(255,255,255,.07);border:1px solid var(--line);border-radius:26px;padding:18px;overflow:auto}.result-card h2{margin:0;font-size:28px;letter-spacing:-.055em;line-height:1}.summary{margin-top:12px;color:var(--muted);font-size:14px;line-height:1.45}.match{margin-top:14px;border:1px solid rgba(255,255,255,.11);background:rgba(0,0,0,.18);border-radius:20px;padding:15px}.match strong{display:block;font-size:17px;letter-spacing:-.02em;margin-bottom:7px}.match span{color:var(--muted);font-size:13px;line-height:1.35;display:block}.score{color:var(--accent2)!important;margin-top:8px;font-weight:850}.small-btns{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}.secondary{border:1px solid var(--line);background:rgba(255,255,255,.05);color:var(--text);border-radius:18px;padding:14px;font-weight:850;cursor:pointer}@media(max-height:720px){h1{font-size:32px}.hero{margin-top:12px}.grid{margin-top:18px}.tile{min-height:108px;padding:15px}.card{height:min(50dvh,390px)}.card-title{font-size:36px}.card-emoji{font-size:58px}}
-  </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover" />
+<title>VibeSwipe MVP</title>
+<style>
+:root {
+  --bg:#090a0f;
+  --text:#f8f8fa;
+  --muted:#a1a1aa;
+  --line:rgba(255,255,255,.13);
+  --accent:#9b7cff;
+  --orange:#ffb86b;
+  --green:#42d77d;
+  --red:#ff6072;
+}
+* { box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+html, body {
+  margin:0;
+  min-height:100%;
+  background:var(--bg);
+  color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Arial,sans-serif;
+}
+body {
+  background:
+    radial-gradient(circle at 0 0, rgba(155,124,255,.28), transparent 36%),
+    radial-gradient(circle at 100% 100%, rgba(255,184,107,.18), transparent 34%),
+    var(--bg);
+}
+button { font:inherit; }
+
+.app {
+  max-width:430px;
+  margin:0 auto;
+  min-height:100svh;
+  padding:18px 16px 22px;
+  display:flex;
+  flex-direction:column;
+}
+
+.top {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:16px;
+}
+.logo {
+  font-size:20px;
+  font-weight:950;
+  letter-spacing:-.05em;
+}
+.sublogo {
+  font-size:12px;
+  color:var(--muted);
+  margin-top:3px;
+}
+.pill {
+  border:1px solid var(--line);
+  border-radius:999px;
+  padding:9px 12px;
+  background:rgba(255,255,255,.045);
+  color:var(--muted);
+  font-size:12px;
+}
+
+.screen {
+  display:none;
+  flex:1;
+  min-height:0;
+}
+.screen.active {
+  display:flex;
+  flex-direction:column;
+}
+
+h1 {
+  font-size:42px;
+  letter-spacing:-.08em;
+  line-height:.92;
+  margin:18px 0 12px;
+}
+.lead {
+  font-size:15px;
+  line-height:1.42;
+  color:var(--muted);
+}
+
+.grid {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  margin-top:26px;
+}
+.tile {
+  min-height:132px;
+  border:1px solid var(--line);
+  border-radius:26px;
+  background:linear-gradient(180deg,rgba(255,255,255,.085),rgba(255,255,255,.035));
+  color:var(--text);
+  padding:18px;
+  text-align:left;
+  cursor:pointer;
+}
+.tile:active,
+.primary:active,
+.choice:active,
+.back:active,
+.secondary:active {
+  transform:scale(.98);
+}
+.tile .e {
+  font-size:35px;
+  display:block;
+  margin-bottom:15px;
+}
+.tile b {
+  display:block;
+  font-size:17px;
+}
+.tile small {
+  display:block;
+  color:var(--muted);
+  margin-top:7px;
+  line-height:1.32;
+}
+
+.primary {
+  margin-top:auto;
+  border:0;
+  border-radius:20px;
+  background:var(--text);
+  color:#111;
+  padding:17px 18px;
+  text-align:center;
+  font-weight:950;
+  cursor:pointer;
+}
+
+.head {
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  align-items:flex-end;
+  margin-top:4px;
+}
+.title {
+  font-size:30px;
+  line-height:1;
+  font-weight:950;
+  letter-spacing:-.065em;
+}
+.caption {
+  font-size:13px;
+  color:var(--muted);
+  margin-top:7px;
+}
+.back {
+  border:1px solid var(--line);
+  border-radius:999px;
+  padding:10px 13px;
+  background:rgba(255,255,255,.05);
+  color:var(--text);
+}
+
+.progress {
+  height:7px;
+  border-radius:999px;
+  background:rgba(255,255,255,.08);
+  overflow:hidden;
+  margin:16px 0 10px;
+}
+.bar {
+  height:100%;
+  width:0;
+  background:linear-gradient(90deg,var(--accent),var(--orange));
+  transition:width .18s ease;
+}
+
+.chips {
+  display:flex;
+  gap:8px;
+  overflow:auto;
+  padding:4px 0 10px;
+}
+.chip {
+  white-space:nowrap;
+  border:1px solid var(--line);
+  border-radius:999px;
+  padding:9px 11px;
+  background:rgba(255,255,255,.045);
+  color:var(--muted);
+  font-size:12px;
+}
+
+.deckWrap {
+  flex:1;
+  min-height:0;
+  display:flex;
+  flex-direction:column;
+}
+.zone {
+  flex:1;
+  position:relative;
+  min-height:385px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.card {
+  position:absolute;
+  inset:8px 0 12px;
+  border:1px solid rgba(255,255,255,.13);
+  border-radius:32px;
+  background:
+    radial-gradient(circle at 0 0,rgba(255,255,255,.17),transparent 38%),
+    linear-gradient(160deg,#272b3b,#14161d 72%);
+  box-shadow:0 20px 80px rgba(0,0,0,.48);
+  padding:26px;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  touch-action:none;
+  user-select:none;
+  transition:transform .18s ease,opacity .18s ease;
+}
+.card.backcard {
+  transform:scale(.94) translateY(18px);
+  opacity:.38;
+  pointer-events:none;
+}
+.stage {
+  font-size:12px;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+  font-weight:950;
+  color:var(--muted);
+}
+.big {
+  font-size:76px;
+  margin-bottom:16px;
+}
+.cardTitle {
+  font-size:45px;
+  font-weight:950;
+  line-height:.92;
+  letter-spacing:-.08em;
+}
+.desc {
+  font-size:15px;
+  line-height:1.38;
+  color:var(--muted);
+  margin-top:13px;
+  max-width:310px;
+}
+.tags {
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+}
+.tag {
+  border:1px solid rgba(255,255,255,.10);
+  border-radius:999px;
+  padding:8px 10px;
+  background:rgba(255,255,255,.05);
+  font-size:12px;
+  color:rgba(255,255,255,.74);
+}
+
+.actions {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  margin-top:8px;
+}
+.choice {
+  border:1px solid var(--line);
+  border-radius:21px;
+  padding:16px 12px;
+  background:rgba(255,255,255,.05);
+  color:var(--text);
+  text-align:center;
+  font-weight:950;
+  cursor:pointer;
+}
+.choice.no {
+  border-color:rgba(255,96,114,.45);
+}
+.choice.yes {
+  border-color:rgba(66,215,125,.45);
+}
+.help {
+  text-align:center;
+  color:var(--muted);
+  font-size:12px;
+  margin-top:9px;
+}
+
+.resultBox {
+  margin-top:20px;
+  border:1px solid var(--line);
+  border-radius:30px;
+  background:rgba(255,255,255,.07);
+  padding:18px;
+  overflow:auto;
+}
+.resultBox h2 {
+  font-size:31px;
+  line-height:1;
+  letter-spacing:-.065em;
+  margin:0 0 10px;
+}
+.summary {
+  color:var(--muted);
+  font-size:14px;
+  line-height:1.42;
+}
+.match {
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:22px;
+  background:rgba(0,0,0,.18);
+  padding:15px;
+  margin-top:13px;
+}
+.match b {
+  display:block;
+  font-size:17px;
+  margin-bottom:7px;
+}
+.match span {
+  display:block;
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.35;
+}
+.score {
+  color:var(--orange)!important;
+  font-weight:900;
+  margin-top:7px;
+}
+.two {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  margin-top:14px;
+}
+.secondary {
+  border:1px solid var(--line);
+  border-radius:20px;
+  background:rgba(255,255,255,.05);
+  color:var(--text);
+  padding:15px;
+  text-align:center;
+  font-weight:950;
+}
+
+@media(max-height:720px) {
+  h1 { font-size:35px; }
+  .tile { min-height:112px; padding:15px; }
+  .zone { min-height:310px; }
+  .cardTitle { font-size:36px; }
+  .big { font-size:58px; }
+  .card { padding:22px; }
+}
+</style>
 </head>
+
 <body>
-<main class="app">
-  <div class="topbar"><div class="brand"><strong>VibeSwipe</strong><span>Москва · вечер · MVP</span></div><div class="pill">19:40</div></div>
-  <section class="screen active" id="home"><div class="hero"><h1>Чем заняться сейчас?</h1><div class="sub">Без анкет и списков. Пара кликов — и свайпы карточек, которые помогают собрать нормальный план.</div></div><div class="grid"><div class="tile" onclick="openMode('food')"><span class="emoji">🍽</span><strong>Похавать</strong><span>доставка, выйти, магазин, конкретная еда</span></div><div class="tile" onclick="openMode('activity')"><span class="emoji">🌙</span><strong>Вайб-вечер</strong><span>погулять, купить прикол, поиграть</span></div><div class="tile" onclick="openMode('group')"><span class="emoji">👨‍👩‍👧</span><strong>Комната</strong><span>семья/друзья свайпают вместе</span></div><div class="tile" onclick="openMode('hotel')"><span class="emoji">🏨</span><strong>Я в отеле</strong><span>еда, прогулка, покупки рядом</span></div></div><button class="cta" onclick="openMode('food')">Быстро: что похавать?</button></section>
-  <section class="screen" id="mode"><div class="flow-head"><div><div class="flow-title" id="modeTitle">Похавать</div><div class="flow-sub">2 клика до свайпов. Выбери быстрый старт.</div></div><button class="chip" onclick="goHome()">←</button></div><div class="mode-panel"><strong>Где ты сейчас?</strong><div class="mini-grid"><button class="mini" onclick="chooseContext(event,'hotel')">🏨 Отель</button><button class="mini" onclick="chooseContext(event,'home')">🏠 Дом</button><button class="mini" onclick="chooseContext(event,'outside')">🚶 Уже снаружи</button><button class="mini" onclick="chooseContext(event,'road')">🚗 На машине</button></div></div><div class="mode-panel"><strong>Темп</strong><div class="mini-grid"><button class="mini" onclick="choosePace(event,'fast')">⚡ Быстро</button><button class="mini" onclick="choosePace(event,'cozy')">🛋 Без напряга</button><button class="mini" onclick="choosePace(event,'new')">🧪 Что-то новое</button><button class="mini" onclick="choosePace(event,'cheap')">💸 Дешево</button></div></div><button class="cta" onclick="startSwipes()">Начать свайпы →</button></section>
-  <section class="screen" id="swipe"><div class="flow-head"><div><div class="flow-title">Свайпай вайб</div><div class="flow-sub" id="swipeSub">10 карточек · Москва · еда</div></div><button class="chip" onclick="goHome()">×</button></div><div class="progress"><div id="progressBar"></div></div><div class="quick-row" id="quickRow"></div><div class="deck-area" id="deckArea"></div><div class="actions"><button class="action no" onclick="swipe('no')">← не то</button><button class="action yes" onclick="swipe('yes')">то →</button></div><div class="hint">На телефоне можно свайпать карточку влево/вправо</div></section>
-  <section class="screen" id="result"><div class="flow-head"><div><div class="flow-title">Понял вайб</div><div class="flow-sub">Примерный матч по фейковому датасету Москвы.</div></div><button class="chip" onclick="goHome()">←</button></div><div class="result-card"><h2 id="resultTitle">Что похавать в Москве</h2><div class="summary" id="resultSummary"></div><div id="matches"></div></div><div class="small-btns"><button class="secondary" onclick="restartFlow()">Еще раз</button><button class="secondary" onclick="goHome()">Главная</button></div></section>
-</main>
+<div class="app">
+  <div class="top">
+    <div>
+      <div class="logo">VibeSwipe</div>
+      <div class="sublogo">Москва · no-form MVP</div>
+    </div>
+    <div class="pill">19:40</div>
+  </div>
+
+  <section id="home" class="screen active">
+    <div>
+      <h1>Не выбирай. Свайпай.</h1>
+      <div class="lead">
+        Главная — только входы. Дальше никаких анкет: контекст, формат и вайб вытаскиваются карточками.
+      </div>
+    </div>
+
+    <div class="grid">
+      <button class="tile" data-flow="food">
+        <span class="e">🍽</span>
+        <b>Похавать</b>
+        <small>отель, дом, заказ, кухня, блюда</small>
+      </button>
+
+      <button class="tile" data-flow="activity">
+        <span class="e">🌙</span>
+        <b>Вайб-вечер</b>
+        <small>погулять, купить прикол, поиграть</small>
+      </button>
+
+      <button class="tile" data-flow="group">
+        <span class="e">👨‍👩‍👧</span>
+        <b>Комната</b>
+        <small>семья/друзья свайпают вместе</small>
+      </button>
+
+      <button class="tile" data-flow="hotel">
+        <span class="e">🏨</span>
+        <b>Я в отеле</b>
+        <small>сразу отельный сценарий</small>
+      </button>
+    </div>
+
+    <button class="primary" data-flow="food">Быстрый старт: похавать →</button>
+  </section>
+
+  <section id="swipe" class="screen">
+    <div class="head">
+      <div>
+        <div id="flowTitle" class="title">Похавать</div>
+        <div id="flowCaption" class="caption">Карточки — не вопросы. Просто свайпай.</div>
+      </div>
+      <button class="back" data-home>×</button>
+    </div>
+
+    <div class="deckWrap">
+      <div class="progress">
+        <div id="bar" class="bar"></div>
+      </div>
+
+      <div id="chips" class="chips"></div>
+      <div id="zone" class="zone"></div>
+
+      <div class="actions">
+        <button id="noBtn" class="choice no">← не то</button>
+        <button id="yesBtn" class="choice yes">то →</button>
+      </div>
+
+      <div class="help">Свайп пальцем работает. Кнопки — fallback.</div>
+    </div>
+  </section>
+
+  <section id="result" class="screen">
+    <div class="head">
+      <div>
+        <div class="title">Понял вайб</div>
+        <div class="caption">Фейковая Москва, чтобы проверить flow.</div>
+      </div>
+      <button class="back" data-home>←</button>
+    </div>
+
+    <div class="resultBox">
+      <h2 id="resultTitle">Что похавать</h2>
+      <div id="summary" class="summary"></div>
+      <div id="matches"></div>
+    </div>
+
+    <div class="two">
+      <button id="againBtn" class="secondary">Еще раз</button>
+      <button class="secondary" data-home>Главная</button>
+    </div>
+  </section>
+</div>
+
 <script>
-const state={mode:'food',context:null,pace:null,index:0,answers:[],scores:{},currentCards:[]};
-const quickChips={food:['Москва','вечер','до 30 мин','без анкеты'],activity:['Москва','вечер','1–2 часа','без плана'],group:['семья','10 свайпов','общий матч','без споров'],hotel:['отель','рядом','доставка','прогулка']};
-const foodCards=[
-{id:'hotel',stage:'Контекст',emoji:'🏨',title:'Отель',desc:'Еда в номер, доставка, магазин рядом, без лишнего движения.',tags:['hotel','delivery','grocery']},
-{id:'home',stage:'Контекст',emoji:'🏠',title:'Дом',desc:'Можно заказать, приготовить или собрать что-то из магазина.',tags:['home','cook','delivery']},
-{id:'restaurant',stage:'Контекст',emoji:'🍽',title:'Сесть где-то',desc:'Выйти в место, посидеть, не есть на ходу.',tags:['dine_in','outside']},
-{id:'delivery',stage:'Формат',emoji:'🛵',title:'Заказать',desc:'Без выхода. Привезли — поел — живешь дальше.',tags:['delivery','low_friction']},
-{id:'cook',stage:'Формат',emoji:'🍳',title:'Приготовить',desc:'Если есть кухня и силы. Быстрый домашний вариант.',tags:['cook','home']},
-{id:'grocery',stage:'Формат',emoji:'🛒',title:'Магазин',desc:'Снеки, готовая еда, напитки, лапша, десерт.',tags:['grocery','snacks','cheap']},
-{id:'walk_food',stage:'Формат',emoji:'🚶',title:'Рядом пешком',desc:'Выйти на 15–30 минут и взять что-то рядом.',tags:['walk','nearby','outside']},
-{id:'fast',stage:'Ограничение',emoji:'⚡',title:'Быстро',desc:'Без долгого выбора, ожидания и брони.',tags:['fast','low_friction']},
-{id:'hot',stage:'Вайб еды',emoji:'🔥',title:'Горячее',desc:'Суп, рамен, пицца, кебаб, вок, хинкали.',tags:['hot']},
-{id:'filling',stage:'Вайб еды',emoji:'🍖',title:'Сытное',desc:'Чтобы нормально наесться, а не просто перекусить.',tags:['filling']},
-{id:'spicy',stage:'Вайб еды',emoji:'🌶',title:'Острое',desc:'Чуть ярче: рамен, том-ям, кебаб, мексиканское.',tags:['spicy']},
-{id:'familiar',stage:'Вайб еды',emoji:'😌',title:'Без экспериментов',desc:'Понятная еда, без риска и странных сюрпризов.',tags:['familiar']},
-{id:'asian',stage:'Направление',emoji:'🍜',title:'Азиатское',desc:'Рамен, вок, том-ям, лапша, дамплинги.',tags:['asian','hot']},
-{id:'middle_east',stage:'Направление',emoji:'🥙',title:'Кебаб / донер',desc:'Быстро, горячо, сытно, нормально для вечера.',tags:['middle_eastern','filling','fast']},
-{id:'italian',stage:'Направление',emoji:'🍕',title:'Итальянское',desc:'Пицца, паста, простая комфортная еда.',tags:['italian','familiar']},
-{id:'georgian',stage:'Направление',emoji:'🥟',title:'Грузинское',desc:'Хинкали, хачапури, супы — хорошо для Москвы.',tags:['georgian','hot','filling']},
-{id:'burger',stage:'Направление',emoji:'🍔',title:'Бургер',desc:'Когда хочется жирненько, быстро и понятно.',tags:['burger','filling','fast']},
-{id:'ramen',stage:'Конкретика',emoji:'🍜',title:'Рамен',desc:'Горячий, сытный, можно острый. Хорошо доставкой.',tags:['asian','hot','filling','spicy','delivery']},
-{id:'wok',stage:'Конкретика',emoji:'🥡',title:'Wok',desc:'Лапша/рис, курица/говядина, быстро и без сложностей.',tags:['asian','fast','filling','delivery']},
-{id:'kebab',stage:'Конкретика',emoji:'🥙',title:'Кебаб',desc:'Сытно, быстро, удобно взять или заказать.',tags:['middle_eastern','fast','filling','spicy']},
-{id:'khinkali',stage:'Конкретика',emoji:'🥟',title:'Хинкали',desc:'Горячее и сытное, если не хочется бургер/пиццу.',tags:['georgian','hot','filling']},
-{id:'pizza',stage:'Конкретика',emoji:'🍕',title:'Пицца',desc:'Самый безопасный вариант для вечера.',tags:['italian','familiar','delivery']}
-];
-const activityCards=[
-{id:'hotel',stage:'Контекст',emoji:'🏨',title:'Отель',desc:'Сделать что-то рядом или вернуться в номер.',tags:['hotel']},
-{id:'home',stage:'Контекст',emoji:'🏠',title:'Дом',desc:'Без дороги, можно купить что-то и залипнуть.',tags:['home']},
-{id:'walk',stage:'Формат',emoji:'🚶',title:'Пройтись',desc:'Короткий маршрут без обязательств.',tags:['walk','low_budget']},
-{id:'drive',stage:'Формат',emoji:'🚗',title:'До часа на машине',desc:'Открывает смотровые, ТЦ, большие магазины.',tags:['drive']},
-{id:'cozy',stage:'Вайб',emoji:'🛋',title:'Без напряга',desc:'Не спорт, не культпоход, просто норм вечер.',tags:['cozy','low_friction']},
-{id:'weird',stage:'Вайб',emoji:'🌀',title:'Странная фигня',desc:'Мини-квест вместо обычных планов.',tags:['weird','quest']},
-{id:'buy_fun',stage:'Вайб',emoji:'🛍',title:'Купить прикол',desc:'LEGO, снеки, пазл, настолка, что-то случайное.',tags:['shopping','fun']},
-{id:'games',stage:'Вайб',emoji:'🎲',title:'Игровое',desc:'Настолки, аркады, бильярд, боулинг.',tags:['games','group']},
-{id:'pretty',stage:'Вайб',emoji:'📸',title:'Красиво',desc:'Смотровая, район, фотопрогулка, кофе.',tags:['pretty','walk']},
-{id:'lego',stage:'Конкретика',emoji:'🧱',title:'LEGO',desc:'Купить набор и собрать под фильм/еду.',tags:['lego','shopping','hotel','home']},
-{id:'snacks',stage:'Конкретика',emoji:'🛒',title:'Странные снеки',desc:'Собрать мини-дегустацию из магазина.',tags:['snacks','cheap','hotel']},
-{id:'viewpoint',stage:'Конкретика',emoji:'🌃',title:'Смотровая',desc:'Съездить, посмотреть город, взять кофе.',tags:['pretty','drive','walk']}
-];
-const foodCandidates=[
-{title:'🍜 Острый рамен / лапша',tags:['asian','hot','filling','spicy','delivery','fast'],text:'Фейковый матч: раменная/лапша в центре или доставка. Хорошо, если выбрал отель + заказать + горячее.',plan:'30–45 мин · доставка/рядом · ₽₽'},
-{title:'🥙 Донер / кебаб',tags:['middle_eastern','fast','filling','spicy','delivery'],text:'Сытно, быстро, удобно в отель/дом. Хорошо матчится с “без экспериментов”.',plan:'15–30 мин · рядом/доставка · ₽'},
-{title:'🥟 Хинкали / хачапури',tags:['georgian','hot','filling','familiar'],text:'Московский safe pick, когда хочется горячего и плотного, но не бургер.',plan:'30–60 мин · ресторан/доставка · ₽₽'},
-{title:'🥡 Wok с курицей/говядиной',tags:['asian','fast','filling','delivery'],text:'Быстрая лапша/рис, много вариантов, хорошо работает как вечерняя доставка.',plan:'25–45 мин · доставка · ₽₽'},
-{title:'🍕 Пицца',tags:['italian','familiar','delivery','filling'],text:'Самый безопасный вариант, если хочется без риска и думания.',plan:'30–50 мин · доставка · ₽₽'},
-{title:'🛒 Магазин: лапша + снеки + напиток',tags:['grocery','snacks','cheap','hotel','fast'],text:'Если доставка бесит: зайти в магазин, собрать быстрый набор и вернуться.',plan:'15–25 мин · магазин рядом · ₽'}
-];
-const activityCandidates=[
-{title:'🧱 Купить LEGO + снеки',tags:['lego','shopping','hotel','home','cozy','low_friction'],text:'Мини-квест: доехать до магазина, взять набор и вернуться собирать.',plan:'60–180 мин · ТЦ/магазин · ₽₽₽'},
-{title:'🌃 Кофе + ночная прогулка',tags:['pretty','walk','cozy','low_budget'],text:'Легкий вариант без брони: кофе, красивый район, короткий маршрут.',plan:'45–90 мин · пешком/такси · ₽'},
-{title:'🎲 Настолка / карточная игра',tags:['games','cozy','home','hotel','group'],text:'Подходит для семьи/друзей или спокойного вечера в номере.',plan:'60–120 мин · магазин/кафе · ₽₽'},
-{title:'🛒 Гипермаркет-квест',tags:['weird','shopping','snacks','drive'],text:'Купить 3 странных продукта, напиток и что-то случайное.',plan:'45–90 мин · до часа на машине · ₽'}
-];
-function $(id){return document.getElementById(id)}function setScreen(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));$(id).classList.add('active')}function resetSession(){state.index=0;state.answers=[];state.scores={};state.currentCards=[];state.context=null;state.pace=null}function goHome(){setScreen('home');resetSession()}
-function openMode(mode){resetSession();state.mode=mode==='hotel'?'food':mode;if(mode==='hotel')state.context='hotel';const titles={food:'Похавать',activity:'Вайб-вечер',group:'Комната',hotel:'Я в отеле'};$('modeTitle').textContent=titles[mode]||'Похавать';renderQuick(mode);setScreen('mode');if(mode==='hotel')setTimeout(()=>startSwipes(),350)}
-function chooseContext(e,ctx){state.context=ctx;e.currentTarget.closest('.mini-grid').querySelectorAll('.mini').forEach(b=>b.classList.remove('selected'));e.currentTarget.classList.add('selected')}function choosePace(e,pace){state.pace=pace;e.currentTarget.closest('.mini-grid').querySelectorAll('.mini').forEach(b=>b.classList.remove('selected'));e.currentTarget.classList.add('selected')}
-function renderQuick(mode){const chips=quickChips[mode]||quickChips.food;$('quickRow').innerHTML=chips.map(c=>`<button class="chip selected">${c}</button>`).join('')}
-function startSwipes(){const mode=state.mode==='group'?'activity':state.mode;state.currentCards=buildDeck(mode);state.index=0;state.answers=[];state.scores={};renderQuick(mode);$('swipeSub').textContent=`${Math.min(12,state.currentCards.length)} карточек · Москва · ${mode==='food'?'еда':'занятия'}`;setScreen('swipe');renderDeck()}
-function buildDeck(mode){const source=mode==='food'?[...foodCards]:[...activityCards];if(state.context){const ctx=source.find(c=>c.id===state.context);if(ctx){source.splice(source.indexOf(ctx),1);source.unshift(ctx)}}if(state.pace){const map={fast:'fast',cozy:'cozy',new:'new',cheap:'cheap'};const tag=map[state.pace];source.sort((a,b)=>(b.tags.includes(tag)?1:0)-(a.tags.includes(tag)?1:0))}return source.slice(0,12)}
-function renderDeck(){const total=state.currentCards.length;$('progressBar').style.width=`${Math.round((state.index/total)*100)}%`;const deck=$('deckArea');deck.innerHTML='';if(state.index>=total){showResult();return}const cur=state.currentCards[state.index],next=state.currentCards[state.index+1];if(next)deck.appendChild(createCard(next,true));deck.appendChild(createCard(cur,false))}
-function createCard(card,back){const el=document.createElement('div');el.className='card'+(back?' back':'');el.innerHTML=`<div class="card-stage">${card.stage}</div><div class="card-main"><span class="card-emoji">${card.emoji}</span><div class="card-title">${card.title}</div><div class="card-desc">${card.desc}</div></div><div class="tags">${card.tags.slice(0,4).map(t=>`<span class="tag">${t}</span>`).join('')}</div>`;if(!back)attachDrag(el);return el}
-function attachDrag(el){let sx=0,sy=0,drag=false;const start=e=>{drag=true;const p=e.touches?e.touches[0]:e;sx=p.clientX;sy=p.clientY;el.style.transition='none'};const move=e=>{if(!drag)return;const p=e.touches?e.touches[0]:e;const dx=p.clientX-sx,dy=p.clientY-sy;el.style.transform=`translate(${dx}px,${dy}px) rotate(${dx/18}deg)`};const end=e=>{if(!drag)return;drag=false;const p=e.changedTouches?e.changedTouches[0]:e;const dx=p.clientX-sx;el.style.transition='';if(dx>70)swipe('yes');else if(dx<-70)swipe('no');else el.style.transform=''};el.addEventListener('mousedown',start);window.addEventListener('mousemove',move);window.addEventListener('mouseup',end);el.addEventListener('touchstart',start,{passive:true});window.addEventListener('touchmove',move,{passive:true});window.addEventListener('touchend',end)}
-function swipe(action){if(state.index>=state.currentCards.length)return;const card=state.currentCards[state.index];const top=document.querySelector('.card:not(.back)');if(top)top.classList.add(action==='yes'?'gone-right':'gone-left');state.answers.push({cardId:card.id,action,tags:card.tags});const mult=action==='yes'?1:-.55;card.tags.forEach(tag=>state.scores[tag]=(state.scores[tag]||0)+mult);state.scores[card.id]=(state.scores[card.id]||0)+(action==='yes'?2:-1);setTimeout(()=>{state.index++;renderDeck()},150)}
-function showResult(){setScreen('result');const mode=state.mode==='food'?'food':'activity';const candidates=mode==='food'?foodCandidates:activityCandidates;const scored=candidates.map(c=>{let score=0;c.tags.forEach(t=>score+=state.scores[t]||0);if(state.context&&c.tags.includes(state.context))score+=1.8;if(state.pace==='fast'&&c.tags.includes('fast'))score+=1.5;if(state.pace==='cheap'&&c.tags.includes('cheap'))score+=1.5;if(state.pace==='cozy'&&c.tags.includes('cozy'))score+=1.3;return{...c,score}}).sort((a,b)=>b.score-a.score).slice(0,4);const topTags=Object.entries(state.scores).sort((a,b)=>b[1]-a[1]).slice(0,5).map(x=>x[0]);$('resultTitle').textContent=mode==='food'?'Что похавать в Москве':'Что сделать вечером';$('resultSummary').textContent=`По свайпам похоже на: ${topTags.join(', ')}. Ниже примерные матчи, не реальные заведения.`;$('matches').innerHTML=scored.map((m,i)=>`<div class="match"><strong>${i+1}. ${m.title}</strong><span>${m.text}</span><span class="score">${m.plan} · match ${Math.max(42,Math.round(70+m.score*6))}%</span></div>`).join('')}
-function restartFlow(){state.index=0;state.answers=[];state.scores={};startSwipes()}window.addEventListener('keydown',e=>{if($('swipe').classList.contains('active')){if(e.key==='ArrowRight')swipe('yes');if(e.key==='ArrowLeft')swipe('no')}});
+(function () {
+  var state = {
+    flow: "food",
+    index: 0,
+    answers: [],
+    scores: {},
+    deck: [],
+    selectedMutex: {}
+  };
+
+  function card(id, group, mutex, stage, emoji, title, desc, tags) {
+    return { id, group, mutex, stage, emoji, title, desc, tags };
+  }
+
+  function match(title, tags, text, plan) {
+    return { title, tags, text, plan };
+  }
+
+  /*
+    ВАЖНО:
+    group + mutex = взаимоисключение.
+
+    Пример:
+    Отель / Дом / Уже снаружи / Ресторан имеют group:"context", mutex:true.
+    Если свайпнуть "Отель" вправо, остальные context-карточки автоматически пропустятся.
+
+    То же самое с форматом еды:
+    Заказать / Приготовить / Магазин / Сесть где-то.
+  */
+
+  var foodDeck = [
+    card("hotel", "context", true, "контекст", "🏨", "Отель",
+      "Еда в номер, доставка, магазин рядом, без лишнего движения.",
+      ["hotel", "delivery", "grocery", "low_friction"]),
+
+    card("home", "context", true, "контекст", "🏠", "Дом",
+      "Можно заказать, приготовить или собрать что-то из магазина.",
+      ["home", "delivery", "cook", "grocery"]),
+
+    card("outside", "context", true, "контекст", "🚶", "Уже снаружи",
+      "Можно быстро зайти куда-то рядом или взять навынос.",
+      ["outside", "walk", "nearby"]),
+
+    card("restaurant_context", "context", true, "контекст", "🍽", "Ресторан",
+      "Хочется не доставка, а сесть где-то и нормально поесть.",
+      ["dine_in", "outside"]),
+
+    card("delivery", "food_format", true, "формат", "🛵", "Заказать",
+      "Без выхода. Привезли — поел — живешь дальше.",
+      ["delivery", "low_friction", "hotel"]),
+
+    card("cook", "food_format", true, "формат", "🍳", "Приготовить",
+      "Если есть кухня и силы на быстрый вариант.",
+      ["cook", "home"]),
+
+    card("grocery", "food_format", true, "формат", "🛒", "Магазин",
+      "Снеки, готовая еда, напитки, лапша, десерт.",
+      ["grocery", "snacks", "cheap", "hotel"]),
+
+    card("dinein", "food_format", true, "формат", "🍽", "Сесть где-то",
+      "Выйти и нормально поесть в заведении.",
+      ["dine_in", "outside"]),
+
+    card("fast", "constraint", false, "ограничение", "⚡", "Быстро",
+      "Без долгого выбора, ожидания и брони.",
+      ["fast", "low_friction"]),
+
+    card("cheap", "constraint", false, "ограничение", "💸", "Дешево",
+      "Не хочется тратить много на обычный вечер.",
+      ["cheap"]),
+
+    card("hot", "food_vibe", false, "вайб еды", "🔥", "Горячее",
+      "Суп, рамен, пицца, кебаб, вок, хинкали.",
+      ["hot"]),
+
+    card("filling", "food_vibe", false, "вайб еды", "🍖", "Сытное",
+      "Чтобы нормально наесться, а не просто перекусить.",
+      ["filling"]),
+
+    card("spicy", "food_vibe", false, "вайб еды", "🌶", "Острое",
+      "Чуть ярче: рамен, том-ям, кебаб, мексиканское.",
+      ["spicy"]),
+
+    card("familiar", "food_vibe", false, "вайб еды", "😌", "Без экспериментов",
+      "Понятная еда, без риска и странных сюрпризов.",
+      ["familiar"]),
+
+    card("asian", "cuisine", false, "направление", "🍜", "Азиатское",
+      "Рамен, вок, том-ям, лапша, дамплинги.",
+      ["asian", "hot"]),
+
+    card("middle", "cuisine", false, "направление", "🥙", "Кебаб / донер",
+      "Быстро, горячо, сытно, норм для вечера.",
+      ["middle_eastern", "fast", "filling", "spicy"]),
+
+    card("georgian", "cuisine", false, "направление", "🥟", "Грузинское",
+      "Хинкали, хачапури, супы — хорошо для Москвы.",
+      ["georgian", "hot", "filling"]),
+
+    card("italian", "cuisine", false, "направление", "🍕", "Итальянское",
+      "Пицца, паста, понятная комфортная еда.",
+      ["italian", "familiar", "delivery"]),
+
+    card("ramen", "dish", false, "конкретика", "🍜", "Рамен",
+      "Горячий, сытный, можно острый. Хорошо доставкой.",
+      ["asian", "hot", "filling", "spicy", "delivery"]),
+
+    card("wok", "dish", false, "конкретика", "🥡", "Wok",
+      "Лапша/рис, курица/говядина, быстро и без сложностей.",
+      ["asian", "fast", "filling", "delivery"]),
+
+    card("kebab", "dish", false, "конкретика", "🥙", "Кебаб",
+      "Сытно, быстро, удобно взять или заказать.",
+      ["middle_eastern", "fast", "filling", "spicy"]),
+
+    card("khinkali", "dish", false, "конкретика", "🥟", "Хинкали",
+      "Горячее и сытное, если не хочется бургер/пиццу.",
+      ["georgian", "hot", "filling"]),
+
+    card("pizza", "dish", false, "конкретика", "🍕", "Пицца",
+      "Самый безопасный вариант для вечера.",
+      ["italian", "familiar", "delivery"])
+  ];
+
+  var activityDeck = [
+    card("hotel", "activity_context", true, "контекст", "🏨", "Отель",
+      "Сделать что-то рядом или вернуться в номер.",
+      ["hotel", "low_friction"]),
+
+    card("home", "activity_context", true, "контекст", "🏠", "Дом",
+      "Без дороги, можно купить что-то и залипнуть.",
+      ["home", "cozy"]),
+
+    card("city", "activity_context", true, "контекст", "🏙", "Новый город",
+      "Не туристическая программа, а мини-квест рядом.",
+      ["city", "walk", "discovery"]),
+
+    card("walk", "activity_format", true, "формат", "🚶", "Пройтись",
+      "Короткий маршрут без обязательств.",
+      ["walk", "low_budget", "low_friction"]),
+
+    card("drive", "activity_format", true, "формат", "🚗", "До часа на машине",
+      "Открывает смотровые, ТЦ, большие магазины.",
+      ["drive", "quest"]),
+
+    card("inside", "activity_format", true, "формат", "🌧", "Внутри",
+      "Кино, ТЦ, настолки, аркады, магазин.",
+      ["indoor", "rainy"]),
+
+    card("cozy", "energy", false, "энергия", "🛋", "Без напряга",
+      "Не спорт, не культпоход, просто норм вечер.",
+      ["cozy", "low_friction"]),
+
+    card("move", "energy", false, "энергия", "🏃", "Подвигаться",
+      "Боулинг, прогулка, аркады, настольный теннис.",
+      ["active", "games"]),
+
+    card("nopeople", "social", false, "социальность", "🤫", "Без людей",
+      "Спокойно, solo-friendly, без толпы и разговоров.",
+      ["solo", "quiet", "low_social"]),
+
+    card("group", "social", false, "социальность", "👥", "Компания",
+      "Чтобы всем было норм: игры, еда, простая активность.",
+      ["group", "games"]),
+
+    card("weird", "activity_vibe", false, "вайб", "🌀", "Странная фигня",
+      "Мини-квест вместо обычных планов.",
+      ["weird", "quest"]),
+
+    card("buyfun", "activity_vibe", false, "вайб", "🛍", "Купить прикол",
+      "LEGO, снеки, пазл, настолка, что-то случайное.",
+      ["shopping", "fun", "quest"]),
+
+    card("pretty", "activity_vibe", false, "вайб", "📸", "Красиво",
+      "Смотровая, район, фотопрогулка, кофе.",
+      ["pretty", "walk"]),
+
+    card("games", "activity_vibe", false, "вайб", "🎲", "Игровое",
+      "Настолки, аркады, бильярд, боулинг.",
+      ["games", "group", "indoor"]),
+
+    card("lego", "activity_specific", false, "конкретика", "🧱", "LEGO",
+      "Купить набор и собрать под фильм/еду.",
+      ["lego", "shopping", "hotel", "home", "cozy"]),
+
+    card("snacks", "activity_specific", false, "конкретика", "🛒", "Странные снеки",
+      "Собрать мини-дегустацию из магазина.",
+      ["snacks", "cheap", "hotel", "weird"]),
+
+    card("viewpoint", "activity_specific", false, "конкретика", "🌃", "Смотровая",
+      "Съездить, посмотреть город, взять кофе.",
+      ["pretty", "drive", "walk"]),
+
+    card("arcade", "activity_specific", false, "конкретика", "🎮", "Аркады",
+      "Игровой зал, автоматы, быстрый фан без плана.",
+      ["games", "indoor", "active"]),
+
+    card("billiards", "activity_specific", false, "конкретика", "🎱", "Бильярд",
+      "Для компании, без сложной подготовки.",
+      ["games", "group", "indoor"]),
+
+    card("coffeeWalk", "activity_specific", false, "конкретика", "☕", "Кофе + прогулка",
+      "Взять кофе и пройтись по красивому району.",
+      ["walk", "pretty", "low_friction"])
+  ];
+
+  var foodMatches = [
+    match("🍜 Острый рамен / лапша",
+      ["asian", "hot", "filling", "spicy", "delivery", "fast"],
+      "Раменная/лапша в центре или доставка. Хорошо, если зашли отель + заказать + горячее.",
+      "30–45 мин · доставка/рядом · ₽₽"),
+
+    match("🥙 Донер / кебаб",
+      ["middle_eastern", "fast", "filling", "spicy", "delivery"],
+      "Сытно, быстро, удобно в отель/дом. Хорошо матчится с “без экспериментов”.",
+      "15–30 мин · рядом/доставка · ₽"),
+
+    match("🥟 Хинкали / хачапури",
+      ["georgian", "hot", "filling", "familiar"],
+      "Московский safe pick: горячее и плотное, но не бургер.",
+      "30–60 мин · ресторан/доставка · ₽₽"),
+
+    match("🥡 Wok с курицей/говядиной",
+      ["asian", "fast", "filling", "delivery"],
+      "Быстрая лапша/рис, много вариантов, хорошо как вечерняя доставка.",
+      "25–45 мин · доставка · ₽₽"),
+
+    match("🍕 Пицца",
+      ["italian", "familiar", "delivery", "filling"],
+      "Самый безопасный вариант, если хочется без риска и думания.",
+      "30–50 мин · доставка · ₽₽"),
+
+    match("🛒 Магазин: лапша + снеки + напиток",
+      ["grocery", "snacks", "cheap", "hotel", "fast"],
+      "Если доставка бесит: зайти в магазин, собрать быстрый набор и вернуться.",
+      "15–25 мин · магазин рядом · ₽")
+  ];
+
+  var activityMatches = [
+    match("🧱 Купить LEGO + снеки",
+      ["lego", "shopping", "hotel", "home", "cozy", "low_friction"],
+      "Мини-квест: доехать до магазина, взять набор и вернуться собирать.",
+      "60–180 мин · ТЦ/магазин · ₽₽₽"),
+
+    match("🌃 Кофе + ночная прогулка",
+      ["pretty", "walk", "cozy", "low_budget"],
+      "Легкий вариант без брони: кофе, красивый район, короткий маршрут.",
+      "45–90 мин · пешком/такси · ₽"),
+
+    match("🎲 Настолка / карточная игра",
+      ["games", "cozy", "home", "hotel", "group"],
+      "Подходит для семьи/друзей или спокойного вечера в номере.",
+      "60–120 мин · магазин/кафе · ₽₽"),
+
+    match("🛒 Гипермаркет-квест",
+      ["weird", "shopping", "snacks", "drive"],
+      "Купить 3 странных продукта, напиток и что-то случайное.",
+      "45–90 мин · до часа на машине · ₽"),
+
+    match("🎮 Аркады + еда рядом",
+      ["games", "indoor", "active", "group"],
+      "Быстрый фан без долгого планирования, особенно для компании.",
+      "60–120 мин · ТЦ/игровой зал · ₽₽")
+  ];
+
+  function $(selector) {
+    return document.querySelector(selector);
+  }
+
+  function $all(selector) {
+    return Array.prototype.slice.call(document.querySelectorAll(selector));
+  }
+
+  function show(id) {
+    $all(".screen").forEach(function (el) {
+      el.classList.remove("active");
+    });
+    $("#" + id).classList.add("active");
+  }
+
+  function reset() {
+    state.index = 0;
+    state.answers = [];
+    state.scores = {};
+    state.deck = [];
+    state.selectedMutex = {};
+  }
+
+  function start(flow) {
+    reset();
+
+    state.flow = flow === "food" ? "food" : "activity";
+
+    var base = state.flow === "food" ? foodDeck.slice() : activityDeck.slice();
+
+    if (flow === "hotel") {
+      base.sort(function (a, b) {
+        return tagScore(b, "hotel") - tagScore(a, "hotel");
+      });
+    }
+
+    if (flow === "group") {
+      base.sort(function (a, b) {
+        return tagScore(b, "group") - tagScore(a, "group");
+      });
+    }
+
+    state.deck = base.slice();
+
+    $("#flowTitle").textContent =
+      flow === "food" ? "Похавать" :
+      flow === "group" ? "Комната" :
+      flow === "hotel" ? "Я в отеле" :
+      "Вайб-вечер";
+
+    $("#flowCaption").textContent =
+      "Взаимоисключение включено: выбрал Отель — Дом/Ресторан пропускаются.";
+
+    renderChips(flow);
+    show("swipe");
+    renderDeck();
+  }
+
+  function tagScore(card, tag) {
+    return card.tags.indexOf(tag) >= 0 || card.id === tag ? 1 : 0;
+  }
+
+  function renderChips(flow) {
+    var arr =
+      flow === "food" ? ["Москва", "еда", "без анкеты", "mutex on"] :
+      flow === "hotel" ? ["отель", "вечер", "сразу свайпы", "mutex on"] :
+      flow === "group" ? ["комната", "семья/друзья", "общий вайб", "mutex on"] :
+      ["Москва", "вечер", "занятия", "mutex on"];
+
+    $("#chips").innerHTML = arr.map(function (x) {
+      return '<span class="chip">' + x + '</span>';
+    }).join("");
+  }
+
+  function shouldSkip(card) {
+    if (!card.mutex) return false;
+
+    var alreadySelectedInGroup = state.selectedMutex[card.group];
+
+    if (!alreadySelectedInGroup) return false;
+
+    return alreadySelectedInGroup !== card.id;
+  }
+
+  function advancePastSkipped() {
+    while (state.index < state.deck.length && shouldSkip(state.deck[state.index])) {
+      var skipped = state.deck[state.index];
+
+      state.answers.push({
+        id: skipped.id,
+        action: "auto_skip",
+        reason: "mutex",
+        group: skipped.group
+      });
+
+      state.index += 1;
+    }
+  }
+
+  function renderDeck() {
+    advancePastSkipped();
+
+    var total = state.deck.length;
+    $("#bar").style.width = Math.round((state.index / total) * 100) + "%";
+
+    var zone = $("#zone");
+    zone.innerHTML = "";
+
+    if (state.index >= total) {
+      return showResult();
+    }
+
+    var current = state.deck[state.index];
+    var next = findNextVisibleCard(state.index + 1);
+
+    if (next) zone.appendChild(makeCard(next, true));
+    zone.appendChild(makeCard(current, false));
+  }
+
+  function findNextVisibleCard(startIndex) {
+    for (var i = startIndex; i < state.deck.length; i++) {
+      if (!shouldSkip(state.deck[i])) {
+        return state.deck[i];
+      }
+    }
+    return null;
+  }
+
+  function makeCard(card, isBack) {
+    var el = document.createElement("div");
+
+    el.className = "card" + (isBack ? " backcard" : "");
+
+    var mutexBadge = card.mutex ? " · один вариант" : "";
+
+    el.innerHTML =
+      '<div class="stage">' + card.stage + mutexBadge + '</div>' +
+      '<div>' +
+        '<div class="big">' + card.emoji + '</div>' +
+        '<div class="cardTitle">' + card.title + '</div>' +
+        '<div class="desc">' + card.desc + '</div>' +
+      '</div>' +
+      '<div class="tags">' +
+        card.tags.slice(0, 4).map(function (tag) {
+          return '<span class="tag">' + tag + '</span>';
+        }).join("") +
+      '</div>';
+
+    if (!isBack) attachDrag(el);
+
+    return el;
+  }
+
+  function vote(action) {
+    if (state.index >= state.deck.length) return;
+
+    var current = state.deck[state.index];
+
+    if (action === "yes" && current.mutex) {
+      state.selectedMutex[current.group] = current.id;
+    }
+
+    var multiplier = action === "yes" ? 1 : -0.55;
+
+    state.answers.push({
+      id: current.id,
+      action: action,
+      group: current.group,
+      tags: current.tags
+    });
+
+    current.tags.forEach(function (tag) {
+      state.scores[tag] = (state.scores[tag] || 0) + multiplier;
+    });
+
+    state.scores[current.id] =
+      (state.scores[current.id] || 0) + (action === "yes" ? 2 : -1);
+
+    var el = document.querySelector(".card:not(.backcard)");
+
+    if (el) {
+      el.style.transform =
+        action === "yes"
+          ? "translateX(125%) rotate(15deg)"
+          : "translateX(-125%) rotate(-15deg)";
+      el.style.opacity = "0";
+    }
+
+    setTimeout(function () {
+      state.index += 1;
+      renderDeck();
+    }, 150);
+  }
+
+  function attachDrag(el) {
+    var startX = 0;
+    var startY = 0;
+    var dragging = false;
+
+    function start(e) {
+      dragging = true;
+      var point = e.touches ? e.touches[0] : e;
+      startX = point.clientX;
+      startY = point.clientY;
+      el.style.transition = "none";
+    }
+
+    function move(e) {
+      if (!dragging) return;
+      var point = e.touches ? e.touches[0] : e;
+      var dx = point.clientX - startX;
+      var dy = point.clientY - startY;
+      el.style.transform =
+        "translate(" + dx + "px," + dy + "px) rotate(" + dx / 18 + "deg)";
+    }
+
+    function end(e) {
+      if (!dragging) return;
+      dragging = false;
+
+      var point = e.changedTouches ? e.changedTouches[0] : e;
+      var dx = point.clientX - startX;
+
+      el.style.transition = "transform .18s ease, opacity .18s ease";
+
+      if (dx > 65) vote("yes");
+      else if (dx < -65) vote("no");
+      else el.style.transform = "";
+    }
+
+    el.addEventListener("touchstart", start, { passive: true });
+    el.addEventListener("touchmove", move, { passive: true });
+    el.addEventListener("touchend", end);
+
+    el.addEventListener("mousedown", start);
+    window.addEventListener("mousemove", move);
+    window.addEventListener("mouseup", end);
+  }
+
+  function showResult() {
+    show("result");
+
+    var candidates = state.flow === "food" ? foodMatches : activityMatches;
+
+    var scored = candidates.map(function (candidate) {
+      var score = 0;
+
+      candidate.tags.forEach(function (tag) {
+        score += state.scores[tag] || 0;
+      });
+
+      return Object.assign({}, candidate, { score: score });
+    });
+
+    scored.sort(function (a, b) {
+      return b.score - a.score;
+    });
+
+    scored = scored.slice(0, 4);
+
+    var topTags = Object.keys(state.scores)
+      .sort(function (a, b) {
+        return state.scores[b] - state.scores[a];
+      })
+      .slice(0, 5);
+
+    var skippedCount = state.answers.filter(function (a) {
+      return a.action === "auto_skip";
+    }).length;
+
+    $("#resultTitle").textContent =
+      state.flow === "food" ? "Что похавать в Москве" : "Что сделать вечером";
+
+    $("#summary").textContent =
+      "По свайпам похоже на: " +
+      (topTags.join(", ") || "нейтральный вайб") +
+      ". Автопропусков из-за взаимоисключения: " +
+      skippedCount +
+      ".";
+
+    $("#matches").innerHTML = scored.map(function (item, index) {
+      var percent = Math.max(50, Math.min(96, Math.round(73 + item.score * 5)));
+
+      return (
+        '<div class="match">' +
+          '<b>' + (index + 1) + ". " + item.title + '</b>' +
+          '<span>' + item.text + '</span>' +
+          '<span class="score">' + item.plan + " · match " + percent + "%</span>" +
+        '</div>'
+      );
+    }).join("");
+  }
+
+  $all("[data-flow]").forEach(function (button) {
+    button.addEventListener("click", function () {
+      start(button.getAttribute("data-flow"));
+    });
+  });
+
+  $all("[data-home]").forEach(function (button) {
+    button.addEventListener("click", function () {
+      reset();
+      show("home");
+    });
+  });
+
+  $("#yesBtn").addEventListener("click", function () {
+    vote("yes");
+  });
+
+  $("#noBtn").addEventListener("click", function () {
+    vote("no");
+  });
+
+  $("#againBtn").addEventListener("click", function () {
+    start(state.flow);
+  });
+
+  window.addEventListener("keydown", function (e) {
+    if ($("#swipe").classList.contains("active")) {
+      if (e.key === "ArrowRight") vote("yes");
+      if (e.key === "ArrowLeft") vote("no");
+    }
+  });
+})();
 </script>
 </body>
 </html>
